@@ -72,7 +72,15 @@ class TTGOTDisplayOutputUsermod : public Usermod {
       return true;
     }
 
-
+    void setupBrightnessControl(){
+      backlightChannel = pinManager.allocateLedc(1);
+      if(backlightChannel==255){
+        pinMode(TFT_BL, OUTPUT);
+      }else{
+        ledcSetup(backlightChannel, 10000, 8);    // t-display-s3 led driver: AW9364DNR, T-display direct led control with pwm
+        ledcAttachPin(TFT_BL, backlightChannel);
+      }
+    }
 
     void setBrightness(){
       if(backlightChannel==255){
@@ -95,7 +103,7 @@ class TTGOTDisplayOutputUsermod : public Usermod {
       for(uint8_t i=0;i<pinCount;i++){
         allPins += ", ";
         allPins += pinsToAllocate[i];
-        if(!PinManager::allocatePin(pinsToAllocate[i], true, PinOwner::UM_Unspecified)){ // UM_DisplayMatrix
+        if(!pinManager.allocatePin(pinsToAllocate[i], true, PinOwner::UM_Unspecified)){ // UM_DisplayMatrix
           notAllocated += ", " + pinsToAllocate[i];
         }  
       }
@@ -126,18 +134,6 @@ class TTGOTDisplayOutputUsermod : public Usermod {
       }
       tft.drawString(F("WLED - DisplayMatrix"), tft.width()/2, tft.height()/2);
     }
-
-    void setupBrightnessControl(){
-      backlightChannel = PinManager::allocateLedc(1);
-      if(backlightChannel==255){
-        pinMode(TFT_BL, OUTPUT);
-      }else{
-        ledcSetup(backlightChannel, 10000, 8);    // t-display-s3 led driver: AW9364DNR, T-display direct led control with pwm
-        ledcAttachPin(TFT_BL, backlightChannel);
-      }
-    }
-
-
 
     void onStateChange(uint8_t mode) {
       setBrightness();
