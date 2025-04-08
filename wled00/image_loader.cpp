@@ -132,12 +132,12 @@ byte renderImageToSegment(Segment &seg) {
 
 void endImagePlayback(Segment *seg) {
   DEBUG_PRINTLN(F("Image playback end called"));
-  if (!activeSeg || activeSeg != seg) return;
-  if (file) file.close();
-  decoder.dealloc();
-  gifDecodeFailed = false;
-  activeSeg = nullptr;
-  lastFilename[1] = '\0';
+  //if (!activeSeg || activeSeg != seg) return;
+  //if (file) file.close();
+  //decoder.dealloc();
+  //gifDecodeFailed = false;
+  //activeSeg = nullptr;
+  //lastFilename[1] = '\0';
   DEBUG_PRINTLN(F("Image playback ended"));
 }
 
