@@ -207,6 +207,11 @@
 #include "../usermods/usermod_v2_auto_playlist/usermod_v2_auto_playlist.h"
 #endif
 
+#ifdef USERMOD_TTGO_TDISPLAY_OUTPUT
+#include "../usermods/usermod_v2_TTGO-TDisplay_output/usermod.h"
+#endif
+
+
 void registerUsermods()
 {
   /*
@@ -408,6 +413,11 @@ void registerUsermods()
 #ifdef USERMOD_AUTO_PLAYLIST
   usermods.add(new AutoPlaylistUsermod(false));
 #endif
+  
+#ifdef USERMOD_TTGO_TDISPLAY_OUTPUT
+//  UsermodManager::add(new TTGOTDisplayOutputUsermod());
+  usermods.add(new TTGOTDisplayOutputUsermod());
+#endif
 
-
+  
 }
